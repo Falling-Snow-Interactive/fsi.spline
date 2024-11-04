@@ -1,0 +1,18 @@
+{
+  "name": "com.fallingsnowinteractive.spline",
+  "version": "0.0.1",
+  "displayName": "FSI Spline",
+  "description": "FSI spline package.",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "keywords": [
+    "Spline"
+  ],
+  "author": {
+    "name": "Kira Dinan",
+    "email": "kiradinan.dev@gmail.com"
+  },
+  "hideInEditor": false,
+  "dependencies": { 
+  }
+}
