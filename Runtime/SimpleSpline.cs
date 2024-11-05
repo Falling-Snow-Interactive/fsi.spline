@@ -10,11 +10,17 @@ namespace fsi.spline
         {
             Tangent = tangent;
         }
+
+        public SimpleSpline(T dif, T tangent) : base(dif)
+        {
+            Tangent = tangent;
+        }
     }
 
     public class Vector2SimpleSpline : SimpleSpline<Vector2>
     {
         public Vector2SimpleSpline(Vector2 start, Vector2 end, Vector2 tangent) : base(start, end, tangent) { }
+        public Vector2SimpleSpline(Vector2 dif, Vector2 tangent) : base(dif, tangent) { }
         
         public override Vector2 Evaluate(float t)
         {
@@ -51,6 +57,18 @@ namespace fsi.spline
             
             Vector3 point = Vector3.Lerp(d, e, t);
             return point;
+        }
+    }
+
+    public class ColorSpline : Spline<Color>
+    {
+        public ColorSpline(Color start, Color end, AnimationCurve curve) : base(start, end, curve) { }
+
+        public override Color Evaluate(float t)
+        {
+            float tAdj = Curve.Evaluate(t);
+            Color lerp = Color.Lerp(Start, End, tAdj);
+            return lerp;
         }
     }
 }
