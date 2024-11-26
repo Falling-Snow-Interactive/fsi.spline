@@ -4,16 +4,25 @@ namespace fsi.spline
 {
     public abstract class SimpleSpline<T> : Spline<T>
     {
-        public T Tangent { get; set; }
+        public T TangentIn { get; set; }
+        public T TangentOut { get; set; }
 
         public SimpleSpline(T start, T end, T tangent) : base(start, end)
         {
-            Tangent = tangent;
+            TangentIn = tangent;
+            TangentOut = tangent;
+        }
+        
+        public SimpleSpline(T start, T end, T tangentIn, T tangentOut) : base(start, end)
+        {
+            TangentIn = tangentIn;
+            TangentOut = tangentOut;
         }
 
         public SimpleSpline(T dif, T tangent) : base(dif)
         {
-            Tangent = tangent;
+            TangentIn = tangent;
+            TangentOut = tangent;
         }
     }
 
@@ -24,8 +33,8 @@ namespace fsi.spline
         
         public override Vector2 Evaluate(float t)
         {
-            Vector2 p0 = Start + Tangent;
-            Vector2 p1 = End - Tangent;
+            Vector2 p0 = Start + TangentIn;
+            Vector2 p1 = End - TangentOut;
 
             Vector2 a = Vector2.Lerp(Start, p0, t);
             Vector2 b = Vector2.Lerp(p0, p1, t);
@@ -42,11 +51,12 @@ namespace fsi.spline
     public class Vector3SimpleSpline : SimpleSpline<Vector3>
     {
         public Vector3SimpleSpline(Vector3 start, Vector3 end, Vector3 tangent) : base(start, end, tangent) { }
+        public Vector3SimpleSpline(Vector3 start, Vector3 end, Vector3 tangentIn, Vector3 tangentOut) : base(start, end, tangentIn, tangentOut) { }
         
         public override Vector3 Evaluate(float t)
         {
-            Vector3 p0 = Start + Tangent;
-            Vector3 p1 = End - Tangent;
+            Vector3 p0 = Start + TangentIn;
+            Vector3 p1 = End - TangentOut;
 
             Vector3 a = Vector3.Lerp(Start, p0, t);
             Vector3 b = Vector3.Lerp(p0, p1, t);
