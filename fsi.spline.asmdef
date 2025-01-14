@@ -1,6 +1,6 @@
 {
     "name": "fsi.spline",
-    "rootNamespace": "fsi.spline",
+    "rootNamespace": "Fsi.Spline",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,38 +1,36 @@
+using System;
+using System.Collections.Generic;
+using UnityEditor;
 
-using UnityEngine;
-
-namespace fsi.spline
+namespace Fsi.Spline
 {
-    public abstract class Spline<T>
+    [Serializable]
+    public abstract class Spline<TCurve, TPoint, TStruct>
+        where TCurve : Curve<TPoint, TStruct>
+        where TPoint : Point<TStruct>
+        where TStruct : struct
     {
-        public T Start { get; set; }
-        public T End { get; set; }
+        public List<TCurve> curves = new();
         
-        public AnimationCurve Curve { get; set; }
-
-        protected Spline(T start, T end)
+        protected Spline(TPoint start, TPoint end)
         {
-            Start = start;
-            End = end;
+        }
 
-            Curve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+        public abstract TPoint Evaluate(float t);
+
+        public void UpdateJoins()
+        {
+            for (int i = 0; i < curves.Count - 1; i++)
+            {
+                TCurve c0 = curves[i];
+                TCurve c1 = curves[i + 1];
+                c1.start = c0.end;
+            }
         }
         
-        protected Spline(T start, T end, AnimationCurve curve)
-        {
-            Start = start;
-            End = end;
-
-            Curve = curve;
-        }
-
-        protected Spline(T dif)
-        {
-            Start = default;
-            End = dif;
-            Curve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
-        }
-
-        public abstract T Evaluate(float t);
+        #if UNITY_EDITOR
+        public abstract void DrawSplineGizmos(int resolution);
+        public abstract void DrawSplineHandles(SerializedObject serializedObject, int resolution);
+        #endif
     }
 }
