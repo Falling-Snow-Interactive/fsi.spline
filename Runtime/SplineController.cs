@@ -2,9 +2,8 @@ using UnityEngine;
 
 namespace Fsi.Spline
 {
-    public class SplineController<TSpline, TCurve, TPoint, TStruct> : MonoBehaviour
-        where TSpline : Spline<TCurve, TPoint, TStruct>
-        where TCurve : Curve<TPoint, TStruct>
+    public class SplineController<TSpline, TPoint, TStruct> : MonoBehaviour
+        where TSpline : Spline<TPoint, TStruct>
         where TPoint : Point<TStruct>
         where TStruct : struct
     {

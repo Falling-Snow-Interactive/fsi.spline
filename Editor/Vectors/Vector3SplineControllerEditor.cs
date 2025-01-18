@@ -14,14 +14,20 @@ namespace Fsi.Spline.Vectors
         {
             splineController = (Vector3SplineController)target;
 
-            foreach (Vector3Curve curve in splineController.spline.curves)
-            {
-                curve.DrawCurveHandles(serializedObject, splineController.resolution);
-            }
-            
-            Vector3Point valuePoint = splineController.spline.Evaluate(splineController.DebugValue);
-            Handles.color = Color.green;
-            Handles.FreeMoveHandle(valuePoint.value, 0.5f, Vector3.zero, Handles.SphereHandleCap);
+            // foreach (Vector3Curve curve in splineController.spline.curves)
+            // {
+            //     curve.DrawCurveHandles(serializedObject, splineController.resolution);
+            // }
+
+            // foreach (Vector3Point point in splineController.spline.points)
+            // {
+            //     point.DrawPointHandles(serializedObject);
+            // }
+            splineController.spline.DrawSplineHandles(serializedObject, splineController.resolution);
+
+            // Vector3Point valuePoint = splineController.spline.Evaluate(splineController.DebugValue);
+            // Handles.color = Color.green;
+            // Handles.FreeMoveHandle(valuePoint.value, 0.5f, Vector3.zero, Handles.SphereHandleCap);
         }
         
         public override VisualElement CreateInspectorGUI()
