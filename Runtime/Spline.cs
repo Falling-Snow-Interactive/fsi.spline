@@ -9,7 +9,7 @@ namespace Fsi.Spline
         where TPoint : Point<TStruct>
         where TStruct : struct
     {
-        // public List<TCurve> curves = new();
+        public CurveType curveType = CurveType.Linear;
         public List<TPoint> points = new List<TPoint>();
         
         protected Spline(TPoint start, TPoint end)
@@ -17,17 +17,19 @@ namespace Fsi.Spline
         }
 
         public abstract TPoint Evaluate(float t);
-        public abstract TPoint EvaluateCurve(TPoint start, TPoint end, float t);
 
-        public void UpdateJoins()
+        public TPoint EvaluateCurve(TPoint start, TPoint end, float t)
         {
-            // for (int i = 0; i < curves.Count - 1; i++)
-            // {
-            //     TCurve c0 = curves[i];
-            //     TCurve c1 = curves[i + 1];
-            //     c1.start = c0.end;
-            // }
+            return curveType switch
+                   {
+                       CurveType.Linear => EvaluateCurveLinear(start, end, t),
+                       CurveType.Bezier => EvaluateCurveBezier(start, end, t),
+                       _ => throw new ArgumentOutOfRangeException()
+                   };
         }
+        
+        public abstract TPoint EvaluateCurveLinear(TPoint start, TPoint end, float t);
+        public abstract TPoint EvaluateCurveBezier(TPoint start, TPoint end, float t);
         
         #if UNITY_EDITOR
         public abstract void DrawSplineGizmos(int resolution);

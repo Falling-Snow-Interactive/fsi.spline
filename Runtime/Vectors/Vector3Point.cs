@@ -25,10 +25,7 @@ namespace Fsi.Spline.Vectors
             return value + tangentIn;
         }
 
-        public override void DrawPointGizmos()
-        {
-            Gizmos.DrawSphere(value, 0.1f);
-        }
+        public override void DrawPointGizmos() { }
 
         /// <summary>
         /// 
