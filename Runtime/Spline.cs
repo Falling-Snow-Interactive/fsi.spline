@@ -10,7 +10,7 @@ namespace Fsi.Spline
         where TStruct : struct
     {
         public CurveType curveType = CurveType.Linear;
-        public List<TPoint> points = new List<TPoint>();
+        public List<TPoint> points = new();
         
         protected Spline(TPoint start, TPoint end)
         {
