@@ -18,24 +18,17 @@ namespace Fsi.Spline.Vectors
             {
                 curve.DrawCurveHandles(serializedObject, splineController.resolution);
             }
+            
+            Vector3Point valuePoint = splineController.spline.Evaluate(splineController.DebugValue);
+            Handles.color = Color.green;
+            Handles.FreeMoveHandle(valuePoint.value, 0.5f, Vector3.zero, Handles.SphereHandleCap);
         }
-
+        
         public override VisualElement CreateInspectorGUI()
         {
             VisualElement root = new();
 
             InspectorElement.FillDefaultInspector(root, serializedObject, this);
-
-            Slider slider = new Slider
-                            {
-                                label = "Value",
-                                value = 0.7f,
-                            };
-
-            slider.RegisterValueChangedCallback(evt =>
-                                                {
-                                                    float value = slider.value;
-                                                });
 
             return root;
         }

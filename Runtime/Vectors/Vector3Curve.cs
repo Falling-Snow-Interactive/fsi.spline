@@ -50,9 +50,9 @@ namespace Fsi.Spline.Vectors
             end.DrawPointHandles(serializedObject);
             
             Handles.color = Color.grey;
-            Handles.DrawDottedLine(start.value, P0, 5);
             Handles.DrawDottedLine(P0, P1, 5);
-            Handles.DrawDottedLine(end.value, P1, 5);
+            Handles.color = Color.blue;
+            Handles.DrawDottedLine(end.value, start.value, 5);
 
             Handles.color = Color.white;
             List<Vector3Point> points = GetPoints(resolution);

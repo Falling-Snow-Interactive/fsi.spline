@@ -12,11 +12,13 @@ namespace Fsi.Spline
 
         [Min(1)]
         public int resolution = 10;
+        
+        [Header("Debugging")]
 
         [Range(0, 1)]
         [SerializeField]
-        private float value = 0.7f;
-        public float Value => value;
+        private float debugValue = 0.7f;
+        public float DebugValue => debugValue;
 
         protected virtual void OnDrawGizmos()
         {

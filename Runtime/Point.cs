@@ -13,13 +13,14 @@ namespace Fsi.Spline
         private string name;
         
         public T value;
+        public TangentType tangentType;
         public T tangentIn;
         public T tangentOut;
 
         public abstract T GetP0();
         public abstract T GetP1();
 
-        public Point(T value, T tangentIn, T tangentOut)
+        protected Point(T value, T tangentIn, T tangentOut)
         {
             this.value = value;
             this.tangentIn = tangentIn;
