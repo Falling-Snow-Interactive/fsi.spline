@@ -6,23 +6,8 @@ using UnityEngine.UIElements;
 namespace Fsi.Spline.Vectors
 {
     [CustomEditor(typeof(Vector3SplineController))]
-    public class Vector3SplineControllerEditor : Editor
+    public class Vector3SplineControllerEditor : SplineControllerEditor<Vector3Spline, Vector3Point, Vector3>
     {
-        Vector3SplineController splineController;
         
-        public void OnSceneGUI()
-        {
-            splineController = (Vector3SplineController)target;
-            splineController.spline.DrawSplineHandles(serializedObject, splineController.resolution);
-        }
-        
-        public override VisualElement CreateInspectorGUI()
-        {
-            VisualElement root = new();
-
-            InspectorElement.FillDefaultInspector(root, serializedObject, this);
-
-            return root;
-        }
     }
 }
