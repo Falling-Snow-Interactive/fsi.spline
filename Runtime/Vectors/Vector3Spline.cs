@@ -59,6 +59,20 @@ namespace Fsi.Spline.Vectors
                 
                 point.DrawPointGizmos();
             }
+
+            if (closed)
+            {
+                Vector3Point point = points[^1];
+                Vector3Point next = points[0];
+                Gizmos.color = Color.white;
+                for (float r = 0; r < resolution; r++)
+                {
+                    Vector3Point p0 = EvaluateCurve(point, next, r/resolution);
+                    Vector3Point p1 = EvaluateCurve(point, next, (r + 1)/resolution);
+                        
+                    Gizmos.DrawLine(p0.value, p1.value);
+                }
+            }
         }
         
         public override void DrawSplineHandles(SerializedObject serializedObject, int resolution)
