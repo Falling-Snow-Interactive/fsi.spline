@@ -11,12 +11,26 @@ namespace Fsi.Spline
     {
         public CurveType curveType = CurveType.Linear;
         public List<TPoint> points = new();
+        public bool closed = false;
         
         protected Spline(TPoint start, TPoint end)
         {
         }
 
-        public abstract TPoint Evaluate(float t);
+        public TPoint Evaluate(float t)
+        {
+            float tAdj = t * (points.Count - 1);
+            int index = (int)tAdj;
+            float tCurve = tAdj - index;
+            
+            if (index == points.Count - 1)
+            {
+                index = points.Count - 2;
+                tCurve = 1;
+            }
+            
+            return EvaluateCurve(points[index], points[index + 1], tCurve);
+        }
 
         public TPoint EvaluateCurve(TPoint start, TPoint end, float t)
         {
