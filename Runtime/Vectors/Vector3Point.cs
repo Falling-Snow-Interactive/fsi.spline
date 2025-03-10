@@ -12,8 +12,6 @@ namespace Fsi.Spline.Vectors
         public Vector3Point(Vector3 value, Vector3 tangentIn, Vector3 tangentOut) : base(value, tangentIn, tangentOut)
         {
         }
-        
-        #if UNITY_EDITOR
 
         public override Vector3 GetP0()
         {
@@ -25,6 +23,8 @@ namespace Fsi.Spline.Vectors
             return value + tangentIn;
         }
 
+        #if UNITY_EDITOR
+        
         public override void DrawPointGizmos() { }
 
         /// <summary>
@@ -32,15 +32,25 @@ namespace Fsi.Spline.Vectors
         /// </summary>
         /// <param name="serializedObject"></param>
         /// <returns>Vector moved.</returns>
-        public override void DrawPointHandles(SerializedObject serializedObject)
+        public override bool DrawPointHandles(SerializedObject serializedObject)
         {
+            bool hasChanged = false;
+
             EditorGUI.BeginChangeCheck();
             Vector3 newPos = Handles.PositionHandle(value, Quaternion.identity);
             if (EditorGUI.EndChangeCheck())
             {
                 value = newPos;
                 serializedObject.ApplyModifiedProperties();
+                hasChanged = true;
             }
+            
+            return hasChanged;
+        }
+
+        public override bool DrawTangentHandles(SerializedObject serializedObject)
+        {
+            bool hasChanged = false;
             
             EditorGUI.BeginChangeCheck();
             Handles.color = Color.green;
@@ -68,6 +78,7 @@ namespace Fsi.Spline.Vectors
                 }
                 
                 serializedObject.ApplyModifiedProperties();
+                hasChanged = true;
             }
             
             EditorGUI.BeginChangeCheck();
@@ -97,9 +108,18 @@ namespace Fsi.Spline.Vectors
                 }
                 
                 serializedObject.ApplyModifiedProperties();
+                hasChanged = true;
             }
+            
+            return hasChanged;
         }
-        
+
         #endif
+
+        public override string ToString()
+        {
+            string s = $"{value} | {tangentIn} - {tangentOut}";
+            return s;
+        }
     }
 }

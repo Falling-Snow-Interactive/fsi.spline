@@ -29,7 +29,8 @@ namespace Fsi.Spline
         
         #if UNITY_EDITOR
         public abstract void DrawPointGizmos();
-        public abstract void DrawPointHandles(SerializedObject serializedObject);
+        public abstract bool DrawPointHandles(SerializedObject serializedObject);
+        public abstract bool DrawTangentHandles(SerializedObject serializedObject);
         #endif
     }
 }

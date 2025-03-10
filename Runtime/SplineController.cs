@@ -19,9 +19,13 @@ namespace Fsi.Spline
         private float debugValue = 0.7f;
         public float DebugValue => debugValue;
 
+        #if UNITY_EDITOR
+        
         protected virtual void OnDrawGizmos()
         {
             spline.DrawSplineGizmos(resolution);
         }
+        
+        #endif
     }
 }

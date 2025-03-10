@@ -5,9 +5,9 @@ using UnityEditor;
 namespace Fsi.Spline
 {
     [Serializable]
-    public abstract class Spline<TPoint, TStruct>
-        where TPoint : Point<TStruct>
-        where TStruct : struct
+    public abstract class Spline<TPoint, TValue>
+        where TPoint : Point<TValue>
+        where TValue : struct
     {
         public CurveType curveType = CurveType.Linear;
         public List<TPoint> points = new();
@@ -15,6 +15,8 @@ namespace Fsi.Spline
         
         protected Spline(TPoint start, TPoint end)
         {
+            points.Add(start);
+            points.Add(end);
         }
 
         public TPoint Evaluate(float t)
@@ -50,6 +52,30 @@ namespace Fsi.Spline
         
         public abstract TPoint EvaluateCurveLinear(TPoint start, TPoint end, float t);
         public abstract TPoint EvaluateCurveBezier(TPoint start, TPoint end, float t);
+
+        public List<TPoint> GetPoints(int resolution)
+        {
+            List<TPoint> points = new();
+            for (int i = 0; i < resolution; i++)
+            {
+                float t = i / (float)(resolution - 1);
+                TPoint p = Evaluate(t);
+                points.Add(p);
+            }
+            return points;
+        }
+        
+        public List<TValue> GetPointsValue(int resolution)
+        {
+            List<TValue> points = new();
+            for (int i = 0; i < resolution; i++)
+            {
+                float t = i / (float)(resolution - 1);
+                TPoint p = Evaluate(t);
+                points.Add(p.value);
+            }
+            return points;
+        }
         
         #if UNITY_EDITOR
         public abstract void DrawSplineGizmos(int resolution);
